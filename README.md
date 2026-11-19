@@ -40,22 +40,22 @@ d:\PTTKHTTT\
 │   │   ├── Appointment3.java, AppointmentDetail3.java, TimeSlot3.java, Service3.java
 │   │   ├── Supplier3.java, SupplierStatistic3.java, ImportReceipt3.java, ImportDetail3.java, SparePart3.java
 │   │   └── ...
-│   ├── dao\                           # Các lớp Data Access Object kế thừa DAO3
-│   │   ├── DAO3.java (và DAO.java)
-│   │   ├── ServiceDAO3.java (và Service3DAO.java)
-│   │   ├── TimeSlotDAO3.java (và TimeSlot3DAO.java)
-│   │   ├── CustomerDAO3.java (và Customer3DAO.java)
-│   │   ├── CarDAO3.java (và Car3DAO.java)
-│   │   ├── AppointmentDAO3.java (và Appointment3DAO.java)
-│   │   ├── SupplierStatisticDAO3.java (và SupplierStatistic3DAO.java)
-│   │   ├── ImportReceiptDAO3.java (và ImportReceipt3DAO.java)
-│   │   └── MemberDAO3.java (và Member3DAO.java)
+│   ├── dao\                           # 9 Lớp Data Access Object chuẩn hậu tố DAO3
+│   │   ├── DAO3.java
+│   │   ├── ServiceDAO3.java
+│   │   ├── TimeSlotDAO3.java
+│   │   ├── CustomerDAO3.java
+│   │   ├── CarDAO3.java
+│   │   ├── AppointmentDAO3.java
+│   │   ├── SupplierStatisticDAO3.java
+│   │   ├── ImportReceiptDAO3.java
+│   │   └── MemberDAO3.java
 │   └── unittest\                      # Kiểm thử đơn vị tự động DAO
 │       └── TestAppointment3DAO.java
 ├── WebContent\                        # Thư mục Web tiêu chuẩn chạy Apache Tomcat
 │   ├── thanhvien\                     # Gói view.thanhvien (Login3.jsp, doLogin3.jsp)
-│   ├── khachhang\                     # Gói view.khachhang (CustomerMain3, SelectSlot3, ConfirmInfo3, SaveAppointment3)
-│   ├── quanli\                        # Gói view.quanli (ManagerMain3, SelectReport3, SupplierReport3, ImportDetail3, ImportInvoice3)
+│   ├── khachhang\                     # Gói view.khachhang (CustomerMain3.jsp, SelectSlot3.jsp, ConfirmInfo3.jsp, SaveAppointment3.jsp)
+│   ├── quanli\                        # Gói view.quanli (ManagerMain3.jsp, SelectReport3.jsp, SupplierReport3.jsp, ImportDetail3.jsp, ImportInvoice3.jsp)
 │   ├── WEB-INF\
 │   │   ├── web.xml                    # Cấu hình Web Application Deployment Descriptor
 │   │   └── lib\                       # Thư viện MySQL Connector JDBC (mysql-connector-j-9.1.0.jar)

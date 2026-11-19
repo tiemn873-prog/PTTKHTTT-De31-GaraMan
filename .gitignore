@@ -1,0 +1,15 @@
+# Compiled class files
+bin/
+*.class
+
+# Temporary archive & cache
+_archive_temp_files/
+extracted_images/
+__pycache__/
+*.pyc
+
+# IDE / System
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Hóa đơn nhập phụ tùng chi tiết</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; background: #f8f9fa; }
+        .navbar { background: #003366; color: white; padding: 15px 30px; }
+        .container { max-width: 900px; margin: 30px auto; background: white; padding: 35px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .invoice-header { display: flex; justify-content: space-between; border-bottom: 2px solid #003366; padding-bottom: 15px; margin-bottom: 20px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 10px 12px; }
+        th { background: #003366; color: white; text-align: center; }
+        .total-row { font-size: 16px; font-weight: bold; background: #fdf2f2; }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <span style="font-size: 18px; font-weight: bold;">GaraMan - Hóa Đơn Nhập Hàng</span>
+    </div>
+    <div class="container">
+        <div class="invoice-header">
+            <div>
+                <h2 style="margin: 0; color: #003366;">HÓA ĐƠN NHẬP PHỤ TÙNG CHI TIẾT</h2>
+                <p style="color: #666; margin: 5px 0 0;">Hệ thống Quản lý Gara Ô tô GaraMan</p>
+            </div>
+            <div style="text-align: right;">
+                <div style="font-size: 18px; font-weight: bold; color: #b30000;">MÃ: PN-20261010-001</div>
+                <div>Ngày nhập: <b>10/10/2026</b></div>
+            </div>
+        </div>
+
+        <p>Nhà cung cấp: <b>Công ty Phụ tùng Ô tô Bosch Việt Nam</b></p>
+        <p>Địa chỉ: KCN Đình Vũ, Hải Phòng | Mã số thuế: 0102030405</p>
+
+        <table>
+            <tr>
+                <th>STT</th>
+                <th>Mã phụ tùng</th>
+                <th>Tên phụ tùng</th>
+                <th>Đơn vị tính</th>
+                <th>Số lượng nhập</th>
+                <th>Đơn giá nhập (VNĐ)</th>
+                <th>Thành tiền (VNĐ)</th>
+            </tr>
+            <tr>
+                <td align="center">1</td>
+                <td align="center"><b>PT-BOSCH-L01</b></td>
+                <td>Lọc dầu động cơ chính hãng Bosch (Camry/Vios)</td>
+                <td align="center">Cái</td>
+                <td align="center">100</td>
+                <td align="right">95.000</td>
+                <td align="right"><b>9.500.000</b></td>
+            </tr>
+            <tr>
+                <td align="center">2</td>
+                <td align="center"><b>PT-BOSCH-G01</b></td>
+                <td>Lọc gió động cơ bảo vệ họng nạp Bosch</td>
+                <td align="center">Cái</td>
+                <td align="center">100</td>
+                <td align="right">150.000</td>
+                <td align="right"><b>15.000.000</b></td>
+            </tr>
+            <tr class="total-row">
+                <td colspan="6" align="right">TỔNG CỘNG TIỀN HÀNG:</td>
+                <td align="right" style="color: #b30000; font-size: 18px;">24.500.000 VNĐ</td>
+            </tr>
+        </table>
+
+        <p style="margin-top: 30px;"><a href="gdChiTietLanNhap.html">← Quay lại danh sách các lần nhập</a> | <a href="index.html">Về mục lục giao diện</a></p>
+    </div>
+</body>
+</html>

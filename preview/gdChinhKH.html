@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>GaraMan - Trang chủ Khách hàng</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; background: #f8f9fa; }
+        .navbar { background: #003366; color: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; }
+        .container { max-width: 900px; margin: 30px auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .user-badge { background: #e8f4fd; border-left: 4px solid #007acc; padding: 12px; margin-bottom: 25px; border-radius: 4px; font-size: 14.5px; }
+        .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+        .card { border: 1px solid #ddd; border-radius: 8px; padding: 25px; text-align: center; transition: 0.2s; background: white; }
+        .card:hover { border-color: #003366; transform: translateY(-3px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .card h3 { color: #003366; margin-top: 0; }
+        .btn { display: inline-block; padding: 10px 20px; background: #003366; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <span style="font-size: 20px; font-weight: bold;">GaraMan - Khách Hàng</span>
+        <a href="gddangnhap.html" style="color: #ffcccc; text-decoration: none;">Đăng xuất</a>
+    </div>
+    <div class="container">
+        <div class="user-badge">
+            Xin chào: <b>Nguyễn Dụng Tiềm</b> (Khách hàng VIP) | SĐT: <b>0988.123.456</b> | Email: <b>tiem.nd@garaman.vn</b>
+        </div>
+        <h2>MENU CHỨC NĂNG</h2>
+        <div class="menu-grid">
+            <div class="card">
+                <h3>Đặt lịch hẹn trực tuyến</h3>
+                <p>Chọn ngày, khung giờ còn trống và đăng ký các gói dịch vụ bảo dưỡng, sửa chữa cho xe.</p>
+                <a href="gdChonNgayGioDV.html" class="btn">Thực hiện đặt lịch</a>
+            </div>
+            <div class="card" style="opacity: 0.6;">
+                <h3>Lịch sử dịch vụ & Bảo dưỡng</h3>
+                <p>Theo dõi quá trình bảo dưỡng, sổ bảo hành điện tử và các hóa đơn đã thanh toán.</p>
+                <a href="#" class="btn" style="background: #888;">Chưa kích hoạt</a>
+            </div>
+        </div>
+        <p style="margin-top: 30px;"><a href="index.html">← Quay lại trang mục lục</a></p>
+    </div>
+</body>
+</html>

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="dao.Member3DAO, model.Member3" %>
+<%@ page import="dao.MemberDAO3, model.Member3" %>
 <%
     request.setCharacterEncoding("UTF-8");
     String u = request.getParameter("username");
@@ -9,7 +9,7 @@
     m.setUsername(u);
     m.setPassword(p);
     
-    Member3DAO dao = new Member3DAO();
+    MemberDAO3 dao = new MemberDAO3();
     Member3 user = dao.checkLogin(m);
     
     if(user == null) {

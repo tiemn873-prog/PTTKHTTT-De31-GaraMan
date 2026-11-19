@@ -5,8 +5,8 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import dao.Appointment3DAO;
-import dao.DAO;
+import dao.AppointmentDAO3;
+import dao.DAO3;
 import model.Appointment3;
 import model.AppointmentDetail3;
 import model.Car3;
@@ -19,16 +19,16 @@ import model.TimeSlot3;
  * Sinh viên: Nguyễn Dụng Tiềm - B23DCCN813 (Hậu tố 3)
  */
 public class TestAppointment3DAO {
-    private Appointment3DAO appDAO;
+    private AppointmentDAO3 appDAO;
 
     public void setUp() throws Exception {
-        appDAO = new Appointment3DAO();
+        appDAO = new AppointmentDAO3();
     }
 
     public void tearDown() throws Exception {
-        if (DAO.con != null && !DAO.con.getAutoCommit()) {
-            DAO.con.rollback();
-            DAO.con.setAutoCommit(true);
+        if (DAO3.con != null && !DAO3.con.getAutoCommit()) {
+            DAO3.con.rollback();
+            DAO3.con.setAutoCommit(true);
         }
     }
 
@@ -96,7 +96,7 @@ public class TestAppointment3DAO {
         app.setAppointmentDetails(details);
 
         try {
-            DAO.con.setAutoCommit(false);
+            DAO3.con.setAutoCommit(false);
 
             boolean result = appDAO.saveAppointment(app);
             assertTrue("Lưu lịch hẹn hợp lệ phải trả về true", result);
@@ -105,7 +105,7 @@ public class TestAppointment3DAO {
             assertTrue("Mã lịch hẹn phải bắt đầu bằng AP3-", app.getAppointmentCode().startsWith("AP3-"));
 
             String checkSql = "SELECT COUNT(*) AS total FROM tblAppointmentDetail3 WHERE appointmentId = ?";
-            CallableStatement cs = DAO.con.prepareCall(checkSql);
+            CallableStatement cs = DAO3.con.prepareCall(checkSql);
             cs.setInt(1, app.getId());
             ResultSet rs = cs.executeQuery();
             if (rs.next()) {
@@ -116,8 +116,8 @@ public class TestAppointment3DAO {
             fail("Xảy ra ngoại lệ: " + e.getMessage());
         } finally {
             try {
-                DAO.con.rollback();
-                DAO.con.setAutoCommit(true);
+                DAO3.con.rollback();
+                DAO3.con.setAutoCommit(true);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -156,14 +156,14 @@ public class TestAppointment3DAO {
         app.setAppointmentDetails(details);
 
         try {
-            DAO.con.setAutoCommit(false);
+            DAO3.con.setAutoCommit(false);
 
             boolean result = appDAO.saveAppointment(app);
             assertTrue("Lưu lịch hẹn nhiều dịch vụ phải thành công", result);
             assertTrue(app.getId() > 0);
 
             String checkSql = "SELECT COUNT(*) AS total FROM tblAppointmentDetail3 WHERE appointmentId = ?";
-            CallableStatement cs = DAO.con.prepareCall(checkSql);
+            CallableStatement cs = DAO3.con.prepareCall(checkSql);
             cs.setInt(1, app.getId());
             ResultSet rs = cs.executeQuery();
             if (rs.next()) {
@@ -174,8 +174,8 @@ public class TestAppointment3DAO {
             fail("Lỗi: " + e.getMessage());
         } finally {
             try {
-                DAO.con.rollback();
-                DAO.con.setAutoCommit(true);
+                DAO3.con.rollback();
+                DAO3.con.setAutoCommit(true);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -233,14 +233,14 @@ public class TestAppointment3DAO {
         app.setAppointmentDetails(details);
 
         try {
-            DAO.con.setAutoCommit(false);
+            DAO3.con.setAutoCommit(false);
             boolean result = appDAO.saveAppointment(app);
             assertFalse("Vi phạm khóa ngoại phải trả về false", result);
         } catch (Exception e) {
         } finally {
             try {
-                DAO.con.rollback();
-                DAO.con.setAutoCommit(true);
+                DAO3.con.rollback();
+                DAO3.con.setAutoCommit(true);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }

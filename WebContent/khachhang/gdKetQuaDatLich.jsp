@@ -17,6 +17,7 @@
         <table border="1" cellpadding="8" cellspacing="0" style="border-collapse:collapse; width:100%; max-width:500px;">
             <tr><td><b>Mã lịch hẹn:</b></td><td><b style="color:blue; font-size:16px;"><%= app != null ? app.getAppointmentCode() : "" %></b></td></tr>
             <tr><td><b>Ngày hẹn:</b></td><td><%= app != null ? app.getAppointmentDate() : "" %></td></tr>
+            <tr><td><b>Trạng thái:</b></td><td><span style="background:#fff3cd; color:#856404; padding:3px 8px; border-radius:4px; font-weight:bold;">Chờ xác nhận</span></td></tr>
             <tr><td><b>Tổng tiền ước tính:</b></td><td><b style="color:red;"><%= app != null ? String.format("%,.0f", app.getTotalAmount()) : "0" %> VNĐ</b></td></tr>
             <tr><td><b>Ghi chú:</b></td><td><%= (app != null && app.getNote() != null) ? app.getNote() : "Không có" %></td></tr>
         </table>

@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class Member3 implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -8,24 +9,41 @@ public class Member3 implements Serializable {
     private int id;
     private String username;
     private String password;
-    private String name;
-    private String phone;
+    private FullName3 fullName;
+    private Date birthday;
+    private Address3 address;
     private String email;
-    private String address;
+    private String phone;
     private String role;
+    private String note;
 
     public Member3() {
+        this.fullName = new FullName3();
+        this.address = new Address3();
     }
 
     public Member3(int id, String username, String password, String name, String phone, String email, String address, String role) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.name = name;
+        this.fullName = new FullName3(name);
         this.phone = phone;
         this.email = email;
-        this.address = address;
+        this.address = new Address3(address);
         this.role = role;
+    }
+
+    public Member3(int id, String username, String password, FullName3 fullName, Date birthday, Address3 address, String email, String phone, String role, String note) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.fullName = fullName;
+        this.birthday = birthday;
+        this.address = address;
+        this.email = email;
+        this.phone = phone;
+        this.role = role;
+        this.note = note;
     }
 
     public int getId() {
@@ -52,12 +70,44 @@ public class Member3 implements Serializable {
         this.password = password;
     }
 
+    public FullName3 getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(FullName3 fullName) {
+        this.fullName = fullName;
+    }
+
     public String getName() {
-        return name;
+        return fullName != null ? fullName.toString() : "";
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.fullName = new FullName3(name);
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public Address3 getAddressObj() {
+        return address;
+    }
+
+    public void setAddressObj(Address3 address) {
+        this.address = address;
+    }
+
+    public String getAddress() {
+        return address != null ? address.toString() : "";
+    }
+
+    public void setAddress(String address) {
+        this.address = new Address3(address);
     }
 
     public String getPhone() {
@@ -76,19 +126,19 @@ public class Member3 implements Serializable {
         this.email = email;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public String getRole() {
         return role;
     }
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }

@@ -2,14 +2,21 @@
 bin/
 *.class
 
-# Temporary archive & cache
-_archive_temp_files/
-extracted_images/
-__pycache__/
-*.pyc
-
-# IDE / System
+# Eclipse & IDE metadata
+.metadata/
+.settings/
 .vscode/
 .idea/
 .DS_Store
 Thumbs.db
+
+# Local demo & mock server (kept locally, excluded from Java Web repo)
+app.py
+chay_ban_web.bat
+chay_he_thong.bat
+preview/
+*.db
+__pycache__/
+*.pyc
+_archive_temp_files/
+extracted_images/

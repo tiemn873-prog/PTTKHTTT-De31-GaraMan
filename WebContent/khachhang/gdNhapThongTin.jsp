@@ -53,7 +53,7 @@
         <input type="hidden" name="totalAmount" value="<%= totalAmount %>" />
         
         <h3>1. Thông tin cá nhân khách hàng</h3>
-        <p>Họ tên: <b><%= cust.getName() %></b> | Điện thoại: <b><%= cust.getPhone() %></b> | Email: <b><%= cust.getEmail() %></b></p>
+        <p>Họ tên: <b><%= cust.getName() %></b> | Điện thoại: <b><%= cust.getPhone() %></b> | Email: <b><%= cust.getEmail() %></b> | Địa chỉ: <b><%= cust.getAddress() %></b></p>
         
         <h3>2. Thông tin xe thực hiện dịch vụ</h3>
         <% if(listCar != null && !listCar.isEmpty()) { %>

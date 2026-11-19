@@ -17,9 +17,9 @@
     } else {
         session.setAttribute("user", user);
         if("Customer".equalsIgnoreCase(user.getRole())) {
-            response.sendRedirect("khachhang/gdChinhKH.jsp");
+            response.sendRedirect("khachhang/CustomerMain3.jsp");
         } else if("Manager".equalsIgnoreCase(user.getRole())) {
-            response.sendRedirect("quanli/gdChinhQL.jsp");
+            response.sendRedirect("quanli/ManagerMain3.jsp");
         } else {
             response.sendRedirect("gddangnhap.jsp?err=unauthorized");
         }

@@ -1,0 +1,126 @@
+@startuml
+title Hình 5: Biểu đồ lớp phân tích modul đặt lịch hẹn trực tuyến
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+skinparam nodesep 35
+skinparam ranksep 45
+top to bottom direction
+
+class CustomerMainUI3 {
+  - subBookAppointment
+}
+class SelectSlotUI3 {
+  - inAppointmentDate
+  - outListTimeSlot
+  - outsubListService
+  - subContinue
+}
+class ConfirmInfoUI3 {
+  - inoutCustomerInfo
+  - inoutCarInfo
+  - outListSelectedService
+  - inNote
+  - subConfirm
+  - subBack
+}
+class SaveAppointmentUI3 {
+  - outMessage
+}
+
+abstract class Member3 {
+  - username
+  - password
+  - fullName
+  - birthday
+  - address
+  - email
+  - phone
+  - role
+  - note
+}
+class FullName3 {
+  - lastName
+  - middleName
+  - firstName
+}
+class Address3 {
+  - houseNumber
+  - street
+  - ward
+  - district
+  - city
+}
+class Customer3 {
+  - customerCode
+  - loyaltyPoint
+  + getCustomerInfo()
+}
+class Car3 {
+  - plateNumber
+  - brand
+  - model
+  - manufactureYear
+  - color
+  - chassisNumber
+  + getCarOfCustomer()
+}
+class TimeSlot3 {
+  - name
+  - startTime
+  - endTime
+  - maxSlot
+  + getAvailableSlot()
+}
+class ServiceCategory3 {
+  - name
+  - description
+}
+class Service3 {
+  - serviceCode
+  - name
+  - description
+  - price
+  - duration
+  + getServiceList()
+}
+class Appointment3 {
+  - appointmentCode
+  - appointmentDate
+  - bookingDate
+  - status
+  - note
+  + checkDuplicate()
+  + saveAppointment()
+}
+class AppointmentDetail3 {
+  - note
+}
+
+' --- Tầng giao diện ---
+CustomerMainUI3 -down- SelectSlotUI3
+SelectSlotUI3 -down- ConfirmInfoUI3
+ConfirmInfoUI3 -down- SaveAppointmentUI3
+
+' --- Phụ thuộc: Tầng giao diện -> Lớp thực thể ---
+SelectSlotUI3 .right.> Service3
+SelectSlotUI3 .right.> TimeSlot3
+ConfirmInfoUI3 .right.> Customer3
+ConfirmInfoUI3 .right.> Car3
+ConfirmInfoUI3 .right.> Appointment3
+SaveAppointmentUI3 .right.> Appointment3
+
+' --- Kế thừa ---
+Member3 <|-down- Customer3
+
+' --- Hợp thành & liên kết ---
+Member3 o-down- FullName3
+Member3 o-down- Address3
+Customer3 "1" o-down- "n" Car3
+ServiceCategory3 "1" o-down- "n" Service3
+Customer3 "1" o-down- "n" Appointment3
+Car3 "1" o-down- "n" Appointment3
+TimeSlot3 "1" o-down- "n" Appointment3
+Appointment3 "1" o-down- "n" AppointmentDetail3
+Service3 "1" o-down- "n" AppointmentDetail3
+
+@enduml

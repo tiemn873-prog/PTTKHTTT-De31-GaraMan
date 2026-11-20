@@ -1,0 +1,122 @@
+@startuml
+title Biểu đồ tuần tự - Module Đặt lịch hẹn trực tuyến (Bản chuẩn đầy đủ có nhánh rẽ trùng lịch alt)
+autonumber
+skinparam shadowing false
+skinparam participantPadding 10
+skinparam boxPadding 10
+
+actor "Khách hàng" as KH
+boundary "CustomerMain3.jsp" as UI_Main
+boundary "SelectSlot3.jsp" as UI_Select
+boundary "ConfirmInfo3.jsp" as UI_Confirm
+boundary "SaveAppointment3.jsp" as UI_Save
+
+control "ServiceDAO3" as DAO_Service
+control "TimeSlotDAO3" as DAO_Slot
+control "CustomerDAO3" as DAO_Cust
+control "CarDAO3" as DAO_Car
+control "AppointmentDAO3" as DAO_App
+
+entity "Service3" as M_Service
+entity "TimeSlot3" as M_Slot
+entity "Customer3" as M_Cust
+entity "Car3" as M_Car
+entity "Appointment3" as M_App
+
+KH -> UI_Main : Chọn Đặt lịch hẹn
+activate UI_Main
+UI_Main -> UI_Select : Chuyển thông tin khách hàng
+activate UI_Select
+
+UI_Select -> DAO_Service : Lấy danh sách dịch vụ
+activate DAO_Service
+DAO_Service -> DAO_Service : getServiceList()
+DAO_Service -> M_Service : Đóng gói dữ liệu
+activate M_Service
+M_Service -> M_Service : Service3()
+M_Service --> DAO_Service : Danh sách dịch vụ
+deactivate M_Service
+DAO_Service --> UI_Select : Danh sách dịch vụ
+deactivate DAO_Service
+UI_Select --> KH : Hiển thị giao diện chọn ngày giờ
+
+KH -> UI_Select : Chọn ngày hẹn
+UI_Select -> DAO_Slot : Lấy khung giờ còn chỗ
+activate DAO_Slot
+DAO_Slot -> DAO_Slot : getAvailableSlot(date)
+DAO_Slot -> M_Slot : Đóng gói dữ liệu
+activate M_Slot
+M_Slot -> M_Slot : TimeSlot3()
+M_Slot --> DAO_Slot : Danh sách khung giờ
+deactivate M_Slot
+DAO_Slot --> UI_Select : Danh sách khung giờ
+deactivate DAO_Slot
+UI_Select --> KH : Hiển thị khung giờ còn chỗ
+
+KH -> UI_Select : Chọn khung giờ, dịch vụ và Tiếp tục
+UI_Select -> UI_Confirm : Chuyển thông tin đã chọn
+activate UI_Confirm
+
+UI_Confirm -> DAO_Cust : Lấy thông tin khách hàng
+activate DAO_Cust
+DAO_Cust -> DAO_Cust : getCustomerInfo(customer)
+DAO_Cust -> M_Cust : Đóng gói dữ liệu
+activate M_Cust
+M_Cust -> M_Cust : Customer3()
+M_Cust --> DAO_Cust : Thông tin khách hàng
+deactivate M_Cust
+DAO_Cust --> UI_Confirm : Thông tin khách hàng
+deactivate DAO_Cust
+
+UI_Confirm -> DAO_Car : Lấy danh sách xe của khách hàng
+activate DAO_Car
+DAO_Car -> DAO_Car : getCarOfCustomer(customer)
+DAO_Car -> M_Car : Đóng gói dữ liệu
+activate M_Car
+M_Car -> M_Car : Car3()
+M_Car --> DAO_Car : Danh sách xe
+deactivate M_Car
+DAO_Car --> UI_Confirm : Danh sách xe
+deactivate DAO_Car
+
+UI_Confirm --> KH : Hiển thị thông tin cá nhân và lịch hẹn
+
+KH -> UI_Confirm : Nhập thông tin; chọn xe và Xác nhận
+UI_Confirm -> UI_Confirm : Kiểm tra dữ liệu hợp lệ
+UI_Confirm -> DAO_App : Kiểm tra lịch hẹn trùng
+activate DAO_App
+DAO_App -> DAO_App : checkDuplicate(customer, date, slot)
+
+alt [isDuplicate == false : Không bị trùng lịch]
+    DAO_App --> UI_Confirm : false
+    deactivate DAO_App
+
+    UI_Confirm -> UI_Save : Chuyển dữ liệu lịch hẹn
+    activate UI_Save
+    UI_Save -> M_App : Đóng gói lịch hẹn và chi tiết dịch vụ
+    activate M_App
+    M_App -> M_App : Appointment3()
+    M_App --> UI_Save : Đối tượng lịch hẹn
+    deactivate M_App
+
+    UI_Save -> DAO_App : Lưu lịch hẹn
+    activate DAO_App
+    DAO_App -> DAO_App : saveAppointment(appointment)
+    DAO_App --> UI_Save : true
+    deactivate DAO_App
+
+    UI_Save --> KH : Thông báo đặt lịch hẹn thành công
+    deactivate UI_Save
+
+else [isDuplicate == true : Bị trùng lịch hẹn]
+    activate DAO_App
+    DAO_App --> UI_Confirm : true
+    deactivate DAO_App
+    UI_Confirm --> KH : Thông báo "Quý khách đã có lịch trong khung giờ này, vui lòng chọn lại!"
+end
+
+deactivate UI_Confirm
+deactivate UI_Select
+deactivate UI_Main
+
+@enduml

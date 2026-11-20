@@ -1,0 +1,32 @@
+@startuml
+title Hình 2: Biểu đồ Use Case - Module Đặt lịch trực tuyến
+left to right direction
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+
+actor Member as M
+actor Customer as C
+
+M <|-- C
+
+rectangle "Module Book Appointment 3" {
+  usecase "Book Appointment 3\n--\nextension points\nView My Appointment 3" as UC_BookApp
+  usecase "View My Appointment 3" as UC_ViewMyApp
+  usecase "Select Service 3" as UC_SelectServ
+  usecase "Select Time Slot 3" as UC_SelectSlot
+  usecase "Confirm Appointment 3" as UC_ConfirmApp
+  usecase "Customer Login 3" as UC_CustLogin
+  usecase "Login 3" as UC_Login
+
+  UC_CustLogin -left-|> UC_Login
+  UC_ViewMyApp ..> UC_BookApp : <<Extend>>
+  UC_BookApp ..> UC_SelectServ : <<Include>>
+  UC_BookApp ..> UC_SelectSlot : <<Include>>
+  UC_BookApp ..> UC_ConfirmApp : <<Include>>
+  UC_BookApp ..> UC_CustLogin : <<Include>>
+}
+
+C -- UC_BookApp
+M -- UC_Login
+
+@enduml

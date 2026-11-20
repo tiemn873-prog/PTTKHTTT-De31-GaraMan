@@ -1,0 +1,202 @@
+@startuml
+title Sơ đồ lớp chi tiết module thống kê nhà cung cấp theo lượng hàng nhập
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+skinparam nodesep 30
+skinparam ranksep 40
+top to bottom direction
+hide circle
+
+' ---------------------------------------------------------
+' TẦNG GIAO DIỆN (JSP)
+' ---------------------------------------------------------
+class "ManagerMain3.jsp" as ManagerMain3 {
+  -manager : Manager3
+  -viewReport : link
+  -logout : link
+}
+
+class "SelectReport3.jsp" as SelectReport3 {
+  -reportType : Select
+  -fromDate : DateInput
+  -toDate : DateInput
+  -btnView : submit
+  -manager : Manager3
+}
+
+class "SupplierReport3.jsp" as SupplierReport3 {
+  -fromDate : Date
+  -toDate : Date
+  -listSupplier : SupplierStatistic3[]
+  -tblSupplier : Table
+  -chooseSupplier : link
+  -back : link
+}
+
+class "ImportDetail3.jsp" as ImportDetail3 {
+  -supplier : Supplier3
+  -fromDate : Date
+  -toDate : Date
+  -listReceipt : ImportReceipt3[]
+  -tblReceipt : Table
+  -chooseReceipt : link
+  -back : link
+}
+
+class "ImportInvoice3.jsp" as ImportInvoice3 {
+  -receipt : ImportReceipt3
+  -listDetail : ImportDetail3[]
+  -tblDetail : Table
+  -totalQuantity : int
+  -totalAmount : BigDecimal
+  -back : link
+}
+
+' ---------------------------------------------------------
+' TẦNG TRUY XUẤT DỮ LIỆU (DAO)
+' ---------------------------------------------------------
+class DAO3 {
+  -con : Connection
+  +DAO3()
+}
+
+class SupplierStatisticDAO3 {
+  +SupplierStatisticDAO3()
+  +getSupplierStatistic(fromDate : Date, toDate : Date) : SupplierStatistic3[]
+}
+
+class ImportReceiptDAO3 {
+  +ImportReceiptDAO3()
+  +getReceiptOfSupplier(supplier : Supplier3, fromDate : Date, toDate : Date) : ImportReceipt3[]
+  +getReceiptDetail(receipt : ImportReceipt3) : ImportReceipt3
+}
+
+' ---------------------------------------------------------
+' TẦNG MÔ HÌNH THỰC THỂ (MODEL)
+' ---------------------------------------------------------
+class Member3 {
+  -id : int
+  -username : String
+  -password : String
+  -fullName : FullName3
+  -birthday : Date
+  -address : Address3
+  -email : String
+  -phone : String
+  -role : String
+  -note : String
+}
+
+class Employee3 {
+  -employeeCode : String
+  -position : String
+  -hireDate : Date
+}
+
+class Manager3
+class WarehouseStaff3
+
+class FullName3 {
+  -id : int
+  -lastName : String
+  -middleName : String
+  -firstName : String
+}
+
+class Address3 {
+  -id : int
+  -houseNumber : String
+  -street : String
+  -ward : String
+  -district : String
+  -city : String
+}
+
+class Supplier3 {
+  -id : int
+  -supplierCode : String
+  -name : String
+  -address : String
+  -phone : String
+  -email : String
+  -representative : String
+}
+
+class SupplierStatistic3 {
+  -importCount : int
+  -totalQuantity : int
+  -totalAmount : BigDecimal
+}
+
+class ImportReceipt3 {
+  -id : int
+  -receiptNumber : String
+  -importDate : Date
+  -note : String
+  -supplier : Supplier3
+  -createdBy : WarehouseStaff3
+  -details : ImportDetail3[]
+}
+
+class ImportDetail3 {
+  -id : int
+  -quantity : int
+  -importPrice : BigDecimal
+  -sparePart : SparePart3
+}
+
+class SparePart3 {
+  -id : int
+  -partCode : String
+  -name : String
+  -unit : String
+  -salePrice : BigDecimal
+  -stockQuantity : int
+  -description : String
+}
+
+' ---------------------------------------------------------
+' LIÊN KẾT TẦNG GIAO DIỆN
+' ---------------------------------------------------------
+ManagerMain3 -right- SelectReport3
+SelectReport3 -right- SupplierReport3
+SupplierReport3 -right- ImportDetail3
+ImportDetail3 -right- ImportInvoice3
+
+' ---------------------------------------------------------
+' LIÊN KẾT TỪ GIAO DIỆN XUỐNG DAO
+' ---------------------------------------------------------
+SelectReport3 -down-> SupplierStatisticDAO3
+SupplierReport3 -down-> ImportReceiptDAO3
+ImportDetail3 -down-> ImportReceiptDAO3
+ImportInvoice3 -down-> ImportReceiptDAO3
+
+' ---------------------------------------------------------
+' KẾ THỪA DAO
+' ---------------------------------------------------------
+DAO3 <|-down- SupplierStatisticDAO3
+DAO3 <|-down- ImportReceiptDAO3
+
+' ---------------------------------------------------------
+' LIÊN KẾT TỪ DAO XUỐNG THỰC THỂ
+' ---------------------------------------------------------
+SupplierStatisticDAO3 -down-> SupplierStatistic3
+ImportReceiptDAO3 -down-> ImportReceipt3
+
+' ---------------------------------------------------------
+' LIÊN KẾT GIỮA CÁC THỰC THỂ
+' ---------------------------------------------------------
+Member3 <|-down- Employee3
+Employee3 <|-down- Manager3
+Employee3 <|-down- WarehouseStaff3
+Member3 o-down- FullName3
+Member3 o-down- Address3
+
+Supplier3 <|-down- SupplierStatistic3
+
+ImportReceipt3 o-down- Supplier3
+ImportReceipt3 o-down- WarehouseStaff3
+ImportReceipt3 o-down- ImportDetail3
+ImportDetail3 o-down- SparePart3
+
+@enduml

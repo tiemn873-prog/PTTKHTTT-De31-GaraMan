@@ -1,0 +1,32 @@
+@startuml
+title Hình 3: Biểu đồ Use Case - Module Thống kê nhà cung cấp theo lượng hàng nhập
+left to right direction
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+
+actor Member as M
+actor Employee as E
+actor Manager as MN
+
+M <|-- E
+E <|-- MN
+
+rectangle "Module View Report 3" {
+  usecase "Login 3" as UC_Login
+  usecase "Manager Login 3" as UC_MgrLogin
+  usecase "View Report 3\n--\nextension points\nView Supplier Import Report 3" as UC_ViewReport
+  usecase "View Supplier Import Report 3\n--\nextension points\nView Supplier Import Detail 3" as UC_ViewSuppReport
+  usecase "View Supplier Import Detail 3\n--\nextension points\nView Import Invoice 3" as UC_ViewSuppDetail
+  usecase "View Import Invoice 3" as UC_ViewInvoice
+
+  UC_MgrLogin -left-|> UC_Login
+  UC_ViewReport ..> UC_MgrLogin : <<Include>>
+  UC_ViewSuppReport ..> UC_ViewReport : <<Extend>>
+  UC_ViewSuppDetail ..> UC_ViewSuppReport : <<Extend>>
+  UC_ViewInvoice ..> UC_ViewSuppDetail : <<Extend>>
+}
+
+MN -- UC_ViewReport
+M -- UC_Login
+
+@enduml

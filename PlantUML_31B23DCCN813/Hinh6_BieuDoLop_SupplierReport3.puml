@@ -1,0 +1,109 @@
+@startuml
+title Hình 6: Biểu đồ lớp phân tích modul thống kê nhà cung cấp theo lượng hàng nhập
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+skinparam nodesep 35
+skinparam ranksep 45
+top to bottom direction
+
+class ManagerMainUI3 {
+  - subViewReport
+}
+class SelectReportUI3 {
+  - inoutReportType
+  - inFromDate
+  - inToDate
+  - subView
+}
+class SupplierReportUI3 {
+  - outsubListSupplierStatistic
+  - subBack
+}
+class ImportDetailUI3 {
+  - outsubListImportReceipt
+  - subBack
+}
+class ImportInvoiceUI3 {
+  - outImportInvoice
+  - subBack
+}
+
+abstract class Member3 {
+  - username
+  - password
+  - fullName
+  - birthday
+  - address
+  - email
+  - phone
+}
+abstract class Employee3 {
+  - employeeCode
+  - position
+  - hireDate
+}
+class Manager3
+class WarehouseStaff3
+class Supplier3 {
+  - supplierCode
+  - name
+  - address
+  - phone
+  - email
+  - representative
+}
+class SupplierStatistic3 {
+  - importCount
+  - totalQuantity
+  - totalAmount
+  + getSupplierStatistic()
+}
+class ImportReceipt3 {
+  - receiptNumber
+  - importDate
+  - note
+  + getReceiptOfSupplier()
+  + getReceiptDetail()
+}
+class ImportDetail3 {
+  - quantity
+  - importPrice
+}
+class SparePart3 {
+  - partCode
+  - name
+  - unit
+  - salePrice
+  - stockQuantity
+  - description
+}
+class PartCategory3 {
+  - name
+  - description
+}
+
+' --- Tầng giao diện ---
+ManagerMainUI3 -down- SelectReportUI3
+SelectReportUI3 -down- SupplierReportUI3
+SupplierReportUI3 -down- ImportDetailUI3
+ImportDetailUI3 -down- ImportInvoiceUI3
+
+' --- Phụ thuộc ---
+SupplierReportUI3 .right.> SupplierStatistic3
+ImportDetailUI3 .right.> ImportReceipt3
+ImportInvoiceUI3 .right.> ImportReceipt3
+
+' --- Kế thừa ---
+Member3 <|-down- Employee3
+Employee3 <|-down- Manager3
+Employee3 <|-down- WarehouseStaff3
+Supplier3 <|-down- SupplierStatistic3
+
+' --- Hợp thành / Liên kết ---
+Supplier3 "1" o-up- "n" ImportReceipt3
+WarehouseStaff3 "1" o-right- "n" ImportReceipt3
+ImportReceipt3 "1" o-down- "n" ImportDetail3
+ImportDetail3 "n" o-down- "1" SparePart3
+ImportDetail3 "n" o-down- "1" PartCategory3
+
+@enduml

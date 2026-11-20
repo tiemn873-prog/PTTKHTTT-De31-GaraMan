@@ -1,0 +1,82 @@
+@startuml
+title Biểu đồ tuần tự - Module Thống kê nhà cung cấp theo lượng hàng nhập
+autonumber
+skinparam shadowing false
+skinparam participantPadding 10
+skinparam boxPadding 10
+
+actor "Nhân viên quản lí" as QL
+boundary "ManagerMain3.jsp" as UI_Main
+boundary "SelectReport3.jsp" as UI_Select
+boundary "SupplierReport3.jsp" as UI_Report
+boundary "ImportDetail3.jsp" as UI_Detail
+boundary "ImportInvoice3.jsp" as UI_Invoice
+
+control "SupplierStatisticDAO3" as DAO_Stat
+control "ImportReceiptDAO3" as DAO_Receipt
+
+entity "SupplierStatistic3" as M_Stat
+entity "ImportReceipt3" as M_Receipt
+
+QL -> UI_Main : Chọn Xem báo cáo
+activate UI_Main
+UI_Main -> UI_Select : Gọi trang chọn thống kê
+activate UI_Select
+UI_Select --> QL : Hiển thị loại thống kê và khoảng ngày
+
+QL -> UI_Select : Chọn thống kê nhà cung cấp, nhập ngày và Xem
+UI_Select -> UI_Select : Kiểm tra khoảng ngày hợp lệ
+UI_Select -> UI_Report : Chuyển ngày bắt đầu và ngày kết thúc
+activate UI_Report
+
+UI_Report -> DAO_Stat : Lấy thống kê nhà cung cấp
+activate DAO_Stat
+DAO_Stat -> DAO_Stat : getSupplierStatistic(fromDate, toDate)
+DAO_Stat -> M_Stat : Đóng gói dữ liệu
+activate M_Stat
+M_Stat -> M_Stat : SupplierStatistic3()
+M_Stat --> DAO_Stat : Danh sách giảm dần theo tổng lượng nhập
+deactivate M_Stat
+DAO_Stat --> UI_Report : Danh sách giảm dần theo tổng lượng nhập
+deactivate DAO_Stat
+UI_Report --> QL : Hiển thị thống kê nhà cung cấp
+
+QL -> UI_Report : Chọn một nhà cung cấp
+UI_Report -> UI_Detail : Chuyển nhà cung cấp và khoảng ngày
+activate UI_Detail
+
+UI_Detail -> DAO_Receipt : Lấy các lần nhập của nhà cung cấp
+activate DAO_Receipt
+DAO_Receipt -> DAO_Receipt : getReceiptOfSupplier(supplier, fromDate, toDate)
+DAO_Receipt -> M_Receipt : Đóng gói dữ liệu
+activate M_Receipt
+M_Receipt -> M_Receipt : ImportReceipt3()
+M_Receipt --> DAO_Receipt : Danh sách phiếu nhập
+deactivate M_Receipt
+DAO_Receipt --> UI_Detail : Danh sách phiếu nhập
+deactivate DAO_Receipt
+UI_Detail --> QL : Hiển thị các lần nhập phụ tùng
+
+QL -> UI_Detail : Chọn một phiếu nhập
+UI_Detail -> UI_Invoice : Chuyển phiếu nhập được chọn
+activate UI_Invoice
+
+UI_Invoice -> DAO_Receipt : Lấy chi tiết hóa đơn nhập
+activate DAO_Receipt
+DAO_Receipt -> DAO_Receipt : getReceiptDetail(receipt)
+DAO_Receipt -> M_Receipt : Đóng gói dữ liệu
+activate M_Receipt
+M_Receipt -> M_Receipt : ImportReceipt3()
+M_Receipt --> DAO_Receipt : Phiếu nhập cùng nhà cung cấp, nhân viên kho và chi tiết
+deactivate M_Receipt
+DAO_Receipt --> UI_Invoice : Phiếu nhập cùng nhà cung cấp, nhân viên kho và chi tiết
+deactivate DAO_Receipt
+UI_Invoice --> QL : Hiển thị hóa đơn nhập tương ứng
+
+deactivate UI_Invoice
+deactivate UI_Detail
+deactivate UI_Report
+deactivate UI_Select
+deactivate UI_Main
+
+@enduml

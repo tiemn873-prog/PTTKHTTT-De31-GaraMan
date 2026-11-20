@@ -1,0 +1,39 @@
+@startuml
+title Hình 8: Biểu đồ giao tiếp của modul đặt lịch hẹn trực tuyến
+hide empty members
+
+object "Khach hang" as KH
+object "CustomerMainUI3" as A
+object "SelectSlotUI3" as B
+object "ConfirmInfoUI3" as C
+object "SaveAppointmentUI3" as D
+object "Service3\n4: getServiceList()" as E
+object "TimeSlot3\n9: getAvailableSlot()" as F
+object "Customer3\n15: getCustomerInfo()" as G
+object "Car3\n18: getCarOfCustomer()" as H
+object "Appointment3\n23: checkDuplicate()\n27: saveAppointment()" as I
+
+KH --> A : 1: chon dat lich hen
+A --> B : 2: goi
+B --> E : 3: goi
+E --> B : 5: tra ve
+B --> KH : 6: hien thi
+KH --> B : 7: chon ngay hen
+B --> F : 8: goi
+F --> B : 10: tra ve
+B --> KH : 11: hien thi
+KH --> B : 12: chon khung gio, dich vu, Tiep tuc
+B --> C : 13: goi
+C --> G : 14: goi
+G --> C : 16: tra ve
+C --> H : 17: goi
+H --> C : 19: tra ve
+C --> KH : 20: hien thi
+KH --> C : 21: nhap thong tin, click Xac nhan
+C --> I : 22: goi
+I --> C : 24: tra ve
+C --> D : 25: goi
+D --> I : 26: goi
+I --> D : 28: tra ve
+D --> KH : 29: bao dat lich hen thanh cong
+@enduml

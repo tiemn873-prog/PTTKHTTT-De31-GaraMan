@@ -1,19 +1,32 @@
 package model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 public class SparePart3 implements Serializable {
     private static final long serialVersionUID = 1L;
     
+    // Các trường khớp chính xác 100% với Sơ đồ thiết kế lớp SparePart3
     private int id;
-    private String code;
-    private String name;
-    private String unit;
-    private double price;
-    private String description;
-    private PartCategory3 category;
+    private String partCode;        // Mã phụ tùng (-partCode : String)
+    private String name;            // Tên phụ tùng (-name : String)
+    private String unit;            // Đơn vị tính (-unit : String)
+    private BigDecimal salePrice;   // Giá bán (-salePrice : BigDecimal)
+    private int stockQuantity;      // Số lượng tồn kho (-stockQuantity : int)
+    private String description;     // Mô tả chi tiết (-description : String)
+    private PartCategory3 category; // Danh mục phụ tùng
 
     public SparePart3() {
+    }
+
+    public SparePart3(int id, String partCode, String name, String unit, BigDecimal salePrice, int stockQuantity, String description) {
+        this.id = id;
+        this.partCode = partCode;
+        this.name = name;
+        this.unit = unit;
+        this.salePrice = salePrice;
+        this.stockQuantity = stockQuantity;
+        this.description = description;
     }
 
     public int getId() {
@@ -24,12 +37,21 @@ public class SparePart3 implements Serializable {
         this.id = id;
     }
 
+    public String getPartCode() {
+        return partCode;
+    }
+
+    public void setPartCode(String partCode) {
+        this.partCode = partCode;
+    }
+
+    // Alias tương thích code cũ
     public String getCode() {
-        return code;
+        return partCode;
     }
 
     public void setCode(String code) {
-        this.code = code;
+        this.partCode = code;
     }
 
     public String getName() {
@@ -48,12 +70,29 @@ public class SparePart3 implements Serializable {
         this.unit = unit;
     }
 
+    public BigDecimal getSalePrice() {
+        return salePrice;
+    }
+
+    public void setSalePrice(BigDecimal salePrice) {
+        this.salePrice = salePrice;
+    }
+
+    // Alias tương thích kiểu double
     public double getPrice() {
-        return price;
+        return salePrice != null ? salePrice.doubleValue() : 0.0;
     }
 
     public void setPrice(double price) {
-        this.price = price;
+        this.salePrice = BigDecimal.valueOf(price);
+    }
+
+    public int getStockQuantity() {
+        return stockQuantity;
+    }
+
+    public void setStockQuantity(int stockQuantity) {
+        this.stockQuantity = stockQuantity;
     }
 
     public String getDescription() {

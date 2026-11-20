@@ -1,0 +1,221 @@
+@startuml
+title Sơ đồ lớp chi tiết module đặt lịch hẹn trực tuyến
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+skinparam nodesep 30
+skinparam ranksep 40
+top to bottom direction
+hide circle
+
+' ---------------------------------------------------------
+' TẦNG GIAO DIỆN (JSP)
+' ---------------------------------------------------------
+class "CustomerMain3.jsp" as CustomerMain3 {
+  -bookAppointment : link
+  -customer : Customer3
+}
+
+class "SelectSlot3.jsp" as SelectSlot3 {
+  -appointmentDate : DateInput
+  -listService : Service3[]
+  -tblService : Table
+  -listSlot : TimeSlot3[]
+  -tblSlot : Table
+  -selectedSlot : TimeSlot3
+  -selectedServices : Service3[]
+  -btnContinue : submit
+  -customer : Customer3
+}
+
+class "SaveAppointment3.jsp" as SaveAppointment3 {
+  -appointment : Appointment3
+  -message : String
+  -btnHome : link
+}
+
+class "ConfirmInfo3.jsp" as ConfirmInfo3 {
+  -customer : Customer3
+  -appointmentDate : Date
+  -slot : TimeSlot3
+  -listService : Service3[]
+  -totalAmount : Text
+  -fullName : Text
+  -phone : Text
+  -email : Text
+  -address : Text
+  -listCar : Car3[]
+  -selectCar : Select
+  -selectedCar : Car3
+  -note : Textarea
+  -btnConfirm : submit
+  -back : link
+}
+
+' ---------------------------------------------------------
+' TẦNG TRUY XUẤT DỮ LIỆU (DAO)
+' ---------------------------------------------------------
+class DAO3 {
+  -con : Connection
+  +DAO3()
+}
+
+class ServiceDAO3 {
+  +ServiceDAO3()
+  +getServiceList() : Service3[]
+}
+
+class TimeSlotDAO3 {
+  +TimeSlotDAO3()
+  +getAvailableSlot(date : Date) : TimeSlot3[]
+}
+
+class AppointmentDAO3 {
+  +AppointmentDAO3()
+  +checkDuplicate(customer : Customer3, date : Date, slot : TimeSlot3) : boolean
+  +saveAppointment(appointment : Appointment3) : boolean
+}
+
+class CustomerDAO3 {
+  +CustomerDAO3()
+  +getCustomerInfo(customer : Customer3) : Customer3
+}
+
+class CarDAO3 {
+  +CarDAO3()
+  +getCarOfCustomer(customer : Customer3) : Car3[]
+}
+
+' ---------------------------------------------------------
+' TẦNG MÔ HÌNH THỰC THỂ (MODEL)
+' ---------------------------------------------------------
+class Appointment3 {
+  -id : int
+  -appointmentCode : String
+  -appointmentDate : Date
+  -bookingDate : Date
+  -status : String
+  -note : String
+  -customer : Customer3
+  -car : Car3
+  -timeSlot : TimeSlot3
+  -details : AppointmentDetail3[]
+}
+
+class TimeSlot3 {
+  -id : int
+  -name : String
+  -startTime : Time
+  -endTime : Time
+  -maxSlot : int
+}
+
+class AppointmentDetail3 {
+  -id : int
+  -note : String
+  -service : Service3
+}
+
+class Service3 {
+  -id : int
+  -serviceCode : String
+  -name : String
+  -description : String
+  -price : BigDecimal
+  -duration : int
+}
+
+class Customer3 {
+  -customerCode : String
+  -loyaltyPoint : int
+  -cars : Car3[]
+}
+
+class Member3 {
+  -id : int
+  -username : String
+  -password : String
+  -fullName : FullName3
+  -birthday : Date
+  -address : Address3
+  -email : String
+  -phone : String
+  -role : String
+  -note : String
+}
+
+class FullName3 {
+  -id : int
+  -lastName : String
+  -middleName : String
+  -firstName : String
+}
+
+class Address3 {
+  -id : int
+  -houseNumber : String
+  -street : String
+  -ward : String
+  -district : String
+  -city : String
+}
+
+class Car3 {
+  -id : int
+  -plateNumber : String
+  -brand : String
+  -model : String
+  -manufactureYear : int
+  -color : String
+  -chassisNumber : String
+}
+
+' ---------------------------------------------------------
+' LIÊN KẾT TẦNG GIAO DIỆN
+' ---------------------------------------------------------
+CustomerMain3 -right- SelectSlot3
+SelectSlot3 -right- SaveAppointment3
+SaveAppointment3 -right- ConfirmInfo3
+
+' ---------------------------------------------------------
+' LIÊN KẾT TỪ GIAO DIỆN XUỐNG DAO
+' ---------------------------------------------------------
+SelectSlot3 -down-> ServiceDAO3
+SelectSlot3 -down-> TimeSlotDAO3
+SaveAppointment3 -down-> AppointmentDAO3
+ConfirmInfo3 -down-> CustomerDAO3
+ConfirmInfo3 -down-> CarDAO3
+ConfirmInfo3 -down-> AppointmentDAO3
+
+' ---------------------------------------------------------
+' KẾ THỪA DAO
+' ---------------------------------------------------------
+DAO3 <|-down- ServiceDAO3
+DAO3 <|-down- TimeSlotDAO3
+DAO3 <|-down- AppointmentDAO3
+DAO3 <|-down- CustomerDAO3
+DAO3 <|-down- CarDAO3
+
+' ---------------------------------------------------------
+' LIÊN KẾT TỪ DAO XUỐNG THỰC THỂ
+' ---------------------------------------------------------
+ServiceDAO3 -down-> Service3
+TimeSlotDAO3 -down-> TimeSlot3
+AppointmentDAO3 -down-> Appointment3
+CustomerDAO3 -down-> Customer3
+CarDAO3 -down-> Car3
+
+' ---------------------------------------------------------
+' LIÊN KẾT GIỮA CÁC THỰC THỂ
+' ---------------------------------------------------------
+Member3 <|-down- Customer3
+Member3 o-down- FullName3
+Member3 o-down- Address3
+Customer3 o-down- Car3
+
+Appointment3 o-down- Customer3
+Appointment3 o-down- Car3
+Appointment3 o-down- TimeSlot3
+Appointment3 o-down- AppointmentDetail3
+AppointmentDetail3 o-down- Service3
+
+@enduml

@@ -1,0 +1,20 @@
+@startuml
+title Hình 9: Biểu đồ trạng thái của modul thống kê nhà cung cấp theo lượng hàng nhập
+
+[*] --> T1
+state "Hien thi GD chinh quan li" as T1
+state "Hien thi GD chon loai thong ke" as T2
+state "Hien thi GD thong ke nha cung cap" as T3
+state "Hien thi GD chi tiet cac lan nhap" as T4
+state "Hien thi GD hoa don nhap" as T5
+
+T1 --> T2 : [chon xem bao cao thong ke]
+T2 --> T2 : [khoang ngay khong hop le] / bao loi
+T2 --> T3 : [chon TK nha cung cap, chon ngay, click Xem]
+T3 --> T2 : [click Quay lai]
+T3 --> T4 : [click 1 nha cung cap]
+T4 --> T3 : [click Quay lai]
+T4 --> T5 : [click 1 lan nhap]
+T5 --> T4 : [click Quay lai]
+T3 --> [*] : [thoat chuc nang]
+@enduml

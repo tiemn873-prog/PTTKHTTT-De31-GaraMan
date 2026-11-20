@@ -5,15 +5,29 @@ import java.io.Serializable;
 public class Car3 implements Serializable {
     private static final long serialVersionUID = 1L;
     
+    // Các trường khớp 100% với Sơ đồ thiết kế lớp Car3
     private int id;
+    private String plateNumber;         // Biển số xe (-plateNumber : String)
+    private String brand;               // Hãng xe (-brand : String)
+    private String model;               // Dòng xe (-model : String)
+    private int manufactureYear;        // Năm sản xuất (-manufactureYear : int)
+    private String color;               // Màu sơn (-color : String)
+    private String chassisNumber;       // Số khung (-chassisNumber : String)
+    
+    // Khóa ngoại hỗ trợ CSDL
     private int customerId;
-    private String licensePlate;
-    private String brand;
-    private String model;
-    private String color;
-    private int year;
 
     public Car3() {
+    }
+
+    public Car3(int id, String plateNumber, String brand, String model, int manufactureYear, String color, String chassisNumber) {
+        this.id = id;
+        this.plateNumber = plateNumber;
+        this.brand = brand;
+        this.model = model;
+        this.manufactureYear = manufactureYear;
+        this.color = color;
+        this.chassisNumber = chassisNumber;
     }
 
     public int getId() {
@@ -32,12 +46,22 @@ public class Car3 implements Serializable {
         this.customerId = customerId;
     }
 
+    // Tên chuẩn theo sơ đồ: plateNumber
+    public String getPlateNumber() {
+        return plateNumber;
+    }
+
+    public void setPlateNumber(String plateNumber) {
+        this.plateNumber = plateNumber;
+    }
+
+    // Alias tương thích code cũ: licensePlate
     public String getLicensePlate() {
-        return licensePlate;
+        return plateNumber;
     }
 
     public void setLicensePlate(String licensePlate) {
-        this.licensePlate = licensePlate;
+        this.plateNumber = licensePlate;
     }
 
     public String getBrand() {
@@ -56,6 +80,24 @@ public class Car3 implements Serializable {
         this.model = model;
     }
 
+    // Tên chuẩn theo sơ đồ: manufactureYear
+    public int getManufactureYear() {
+        return manufactureYear;
+    }
+
+    public void setManufactureYear(int manufactureYear) {
+        this.manufactureYear = manufactureYear;
+    }
+
+    // Alias tương thích code cũ: year
+    public int getYear() {
+        return manufactureYear;
+    }
+
+    public void setYear(int year) {
+        this.manufactureYear = year;
+    }
+
     public String getColor() {
         return color;
     }
@@ -64,11 +106,11 @@ public class Car3 implements Serializable {
         this.color = color;
     }
 
-    public int getYear() {
-        return year;
+    public String getChassisNumber() {
+        return chassisNumber;
     }
 
-    public void setYear(int year) {
-        this.year = year;
+    public void setChassisNumber(String chassisNumber) {
+        this.chassisNumber = chassisNumber;
     }
 }

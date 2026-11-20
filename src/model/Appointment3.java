@@ -7,20 +7,36 @@ import java.util.Date;
 public class Appointment3 implements Serializable {
     private static final long serialVersionUID = 1L;
     
+    // Các trường khớp chính xác 100% với Sơ đồ thiết kế lớp Appointment3
     private int id;
-    private String appointmentCode;
-    private Customer3 customer;
-    private Car3 car;
-    private TimeSlot3 timeSlot;
-    private Date appointmentDate;
+    private String appointmentCode;                             // Mã lịch hẹn (-appointmentCode : String)
+    private Date appointmentDate;                               // Ngày hẹn (-appointmentDate : Date)
+    private Date bookingDate;                                   // Ngày đặt lịch (-bookingDate : Date)
+    private String status;                                      // Trạng thái (-status : String)
+    private String note;                                        // Ghi chú (-note : String)
+    private Customer3 customer;                                 // Khách hàng (-customer : Customer3)
+    private Car3 car;                                           // Xe (-car : Car3)
+    private TimeSlot3 timeSlot;                                 // Khung giờ (-timeSlot : TimeSlot3)
+    private ArrayList<AppointmentDetail3> details;              // Danh sách chi tiết (-details : AppointmentDetail3[])
+    
+    // Thuộc tính bổ trợ tính tổng tiền
     private double totalAmount;
-    private String status;
-    private String note;
-    private Date createdDate;
-    private ArrayList<AppointmentDetail3> appointmentDetails;
 
     public Appointment3() {
-        this.appointmentDetails = new ArrayList<>();
+        this.details = new ArrayList<>();
+    }
+
+    public Appointment3(int id, String appointmentCode, Date appointmentDate, Date bookingDate, String status, String note, Customer3 customer, Car3 car, TimeSlot3 timeSlot) {
+        this.id = id;
+        this.appointmentCode = appointmentCode;
+        this.appointmentDate = appointmentDate;
+        this.bookingDate = bookingDate;
+        this.status = status;
+        this.note = note;
+        this.customer = customer;
+        this.car = car;
+        this.timeSlot = timeSlot;
+        this.details = new ArrayList<>();
     }
 
     public int getId() {
@@ -37,6 +53,48 @@ public class Appointment3 implements Serializable {
 
     public void setAppointmentCode(String appointmentCode) {
         this.appointmentCode = appointmentCode;
+    }
+
+    public Date getAppointmentDate() {
+        return appointmentDate;
+    }
+
+    public void setAppointmentDate(Date appointmentDate) {
+        this.appointmentDate = appointmentDate;
+    }
+
+    // Tên chuẩn theo sơ đồ: bookingDate
+    public Date getBookingDate() {
+        return bookingDate;
+    }
+
+    public void setBookingDate(Date bookingDate) {
+        this.bookingDate = bookingDate;
+    }
+
+    // Alias tương thích code cũ: createdDate
+    public Date getCreatedDate() {
+        return bookingDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.bookingDate = createdDate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 
     public Customer3 getCustomer() {
@@ -63,12 +121,22 @@ public class Appointment3 implements Serializable {
         this.timeSlot = timeSlot;
     }
 
-    public Date getAppointmentDate() {
-        return appointmentDate;
+    // Tên chuẩn theo sơ đồ: details
+    public ArrayList<AppointmentDetail3> getDetails() {
+        return details;
     }
 
-    public void setAppointmentDate(Date appointmentDate) {
-        this.appointmentDate = appointmentDate;
+    public void setDetails(ArrayList<AppointmentDetail3> details) {
+        this.details = details;
+    }
+
+    // Alias tương thích code cũ: appointmentDetails
+    public ArrayList<AppointmentDetail3> getAppointmentDetails() {
+        return details;
+    }
+
+    public void setAppointmentDetails(ArrayList<AppointmentDetail3> appointmentDetails) {
+        this.details = appointmentDetails;
     }
 
     public double getTotalAmount() {
@@ -77,37 +145,5 @@ public class Appointment3 implements Serializable {
 
     public void setTotalAmount(double totalAmount) {
         this.totalAmount = totalAmount;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
-    }
-
-    public Date getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public ArrayList<AppointmentDetail3> getAppointmentDetails() {
-        return appointmentDetails;
-    }
-
-    public void setAppointmentDetails(ArrayList<AppointmentDetail3> appointmentDetails) {
-        this.appointmentDetails = appointmentDetails;
     }
 }

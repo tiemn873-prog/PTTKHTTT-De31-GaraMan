@@ -1,0 +1,67 @@
+@startuml
+title Hình 1: Biểu đồ Use Case tổng quan - Hệ thống GaraMan
+left to right direction
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+
+actor Member as M
+actor Customer as C
+actor Employee as E
+actor "Warehouse Staff" as WS
+actor "Sales Staff" as SS
+actor Technician as T
+actor Manager as MN
+
+' Quan hệ thừa kế giữa các Actor
+M <|-- C
+M <|-- E
+E <|-- WS
+E <|-- SS
+E <|-- T
+E <|-- MN
+
+rectangle "GaraMan - Hệ thống quản lý gara ô tô" {
+  usecase "Login 3" as UC_Login
+  usecase "Logout 3" as UC_Logout
+  usecase "Change Password 3" as UC_ChangePass
+  usecase "Cancel Appointment 3" as UC_CancelApp
+  usecase "Book Appointment 3" as UC_BookApp
+  usecase "Search Service 3" as UC_SearchServ
+  usecase "Import Spare Part 3" as UC_ImportPart
+  usecase "Manage Catalog 3" as UC_ManageCat
+  usecase "Receive Customer 3" as UC_ReceiveCust
+  usecase "Receive Service Request 3" as UC_ReceiveReq
+  usecase "Manage Supplier 3" as UC_ManageSupp
+  usecase "Receive Payment 3" as UC_ReceivePay
+  usecase "Assign Technician 3" as UC_AssignTech
+  usecase "View Report 3" as UC_ViewReport
+  usecase "Manage Service 3" as UC_ManageServ
+  usecase "Manage Spare Part 3" as UC_ManagePart
+
+  ' Chuyên biệt hóa của Quản lý danh mục
+  UC_ManageCat <|-- UC_ManageServ
+  UC_ManageCat <|-- UC_ManagePart
+}
+
+' Liên kết giữa Actor và Use Case
+M -- UC_Login
+M -- UC_Logout
+M -- UC_ChangePass
+
+C -- UC_CancelApp
+C -- UC_BookApp
+C -- UC_SearchServ
+
+WS -- UC_ImportPart
+WS -- UC_ManageCat
+
+SS -- UC_ReceiveCust
+SS -- UC_ReceiveReq
+SS -- UC_ManageSupp
+SS -- UC_ReceivePay
+
+T -- UC_AssignTech
+
+MN -- UC_ViewReport
+
+@enduml

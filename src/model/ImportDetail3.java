@@ -1,18 +1,29 @@
 package model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 public class ImportDetail3 implements Serializable {
     private static final long serialVersionUID = 1L;
     
+    // Các trường khớp chính xác 100% với Sơ đồ thiết kế lớp ImportDetail3
     private int id;
+    private int quantity;               // Số lượng (-quantity : int)
+    private BigDecimal importPrice;     // Đơn giá nhập (-importPrice : BigDecimal)
+    private SparePart3 sparePart;       // Phụ tùng (-sparePart : SparePart3)
+    
+    // Các trường bổ trợ CSDL & hiển thị
     private int receiptId;
-    private SparePart3 sparePart;
-    private int quantity;
-    private double unitPrice;
     private double amount;
 
     public ImportDetail3() {
+    }
+
+    public ImportDetail3(int id, int quantity, BigDecimal importPrice, SparePart3 sparePart) {
+        this.id = id;
+        this.quantity = quantity;
+        this.importPrice = importPrice;
+        this.sparePart = sparePart;
     }
 
     public int getId() {
@@ -23,12 +34,38 @@ public class ImportDetail3 implements Serializable {
         this.id = id;
     }
 
-    public int getReceiptId() {
-        return receiptId;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setReceiptId(int receiptId) {
-        this.receiptId = receiptId;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    // Tên chuẩn theo sơ đồ: BigDecimal importPrice
+    public BigDecimal getImportPriceBigDecimal() {
+        return importPrice;
+    }
+
+    public void setImportPrice(BigDecimal importPrice) {
+        this.importPrice = importPrice;
+    }
+
+    // Alias tương thích code cũ: double unitPrice
+    public double getUnitPrice() {
+        return importPrice != null ? importPrice.doubleValue() : 0.0;
+    }
+
+    public void setUnitPrice(double unitPrice) {
+        this.importPrice = BigDecimal.valueOf(unitPrice);
+    }
+
+    public double getImportPrice() {
+        return getUnitPrice();
+    }
+
+    public void setImportPrice(double importPrice) {
+        setUnitPrice(importPrice);
     }
 
     public SparePart3 getSparePart() {
@@ -39,20 +76,12 @@ public class ImportDetail3 implements Serializable {
         this.sparePart = sparePart;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public int getReceiptId() {
+        return receiptId;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public double getUnitPrice() {
-        return unitPrice;
-    }
-
-    public void setUnitPrice(double unitPrice) {
-        this.unitPrice = unitPrice;
+    public void setReceiptId(int receiptId) {
+        this.receiptId = receiptId;
     }
 
     public double getAmount() {

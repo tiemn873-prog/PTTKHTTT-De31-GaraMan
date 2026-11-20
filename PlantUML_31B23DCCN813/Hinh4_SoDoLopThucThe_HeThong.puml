@@ -1,0 +1,190 @@
+@startuml
+title Hình 4: Sơ đồ lớp thực thể pha phân tích của hệ thống GaraMan
+hide methods
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+skinparam nodesep 30
+skinparam ranksep 45
+top to bottom direction
+
+abstract class Member3 {
+  - username
+  - password
+  - fullName
+  - birthday
+  - address
+  - email
+  - phone
+  - role
+  - note
+}
+class FullName3 {
+  - lastName
+  - middleName
+  - firstName
+}
+class Address3 {
+  - houseNumber
+  - street
+  - ward
+  - district
+  - city
+}
+class Customer3 {
+  - customerCode
+  - loyaltyPoint
+}
+abstract class Employee3 {
+  - employeeCode
+  - position
+  - hireDate
+}
+class Manager3
+class WarehouseStaff3
+class SalesStaff3
+class Technician3
+class Car3 {
+  - plateNumber
+  - brand
+  - model
+  - manufactureYear
+  - color
+  - chassisNumber
+}
+class ServiceCategory3 {
+  - name
+  - description
+}
+class Service3 {
+  - serviceCode
+  - name
+  - description
+  - price
+  - duration
+}
+class PartCategory3 {
+  - name
+  - description
+}
+class SparePart3 {
+  - partCode
+  - name
+  - unit
+  - salePrice
+  - stockQuantity
+  - description
+}
+class Supplier3 {
+  - supplierCode
+  - name
+  - address
+  - phone
+  - email
+  - representative
+}
+class ImportReceipt3 {
+  - receiptNumber
+  - importDate
+  - note
+}
+class ImportDetail3 {
+  - quantity
+  - importPrice
+}
+class TimeSlot3 {
+  - name
+  - startTime
+  - endTime
+  - maxSlot
+}
+class Appointment3 {
+  - appointmentCode
+  - appointmentDate
+  - bookingDate
+  - status
+  - note
+}
+class AppointmentDetail3 {
+  - note
+}
+class ServiceOrder3 {
+  - orderNumber
+  - orderDate
+  - status
+}
+class ServiceDetail3 {
+  - quantity
+  - price
+  - status
+}
+class UsedPart3 {
+  - quantity
+  - price
+}
+class Assignment3 {
+  - assignDate
+  - finishDate
+  - status
+}
+class PaymentInvoice3 {
+  - invoiceNumber
+  - paymentDate
+  - paymentMethod
+  - discount
+}
+class SupplierStatistic3 {
+  - importCount
+  - totalQuantity
+  - totalAmount
+}
+class ServiceStatistic3 {
+  - usageCount
+  - totalRevenue
+}
+class SparePartStatistic3 {
+  - importQuantity
+  - soldQuantity
+}
+class CustomerStatistic3 {
+  - visitCount
+  - totalSpending
+}
+
+Member3 <|-down- Customer3
+Member3 <|-down- Employee3
+Employee3 <|-down- Manager3
+Employee3 <|-down- WarehouseStaff3
+Employee3 <|-down- SalesStaff3
+Employee3 <|-down- Technician3
+Member3 o-down- FullName3
+Member3 o-down- Address3
+Supplier3 <|-down- SupplierStatistic3
+Service3 <|-down- ServiceStatistic3
+SparePart3 <|-down- SparePartStatistic3
+Customer3 <|-down- CustomerStatistic3
+
+Customer3 "1" o-down- "n" Car3
+ServiceCategory3 "1" o-down- "n" Service3
+PartCategory3 "1" o-down- "n" SparePart3
+Supplier3 "1" o-down- "n" ImportReceipt3
+WarehouseStaff3 "1" o-down- "n" ImportReceipt3
+ImportReceipt3 "1" o-down- "n" ImportDetail3
+SparePart3 "1" o-down- "n" ImportDetail3
+TimeSlot3 "1" o-down- "n" Appointment3
+Customer3 "1" o-down- "n" Appointment3
+Car3 "1" o-down- "n" Appointment3
+Appointment3 "1" o-down- "n" AppointmentDetail3
+Service3 "1" o-down- "n" AppointmentDetail3
+Appointment3 "1" o-down- "0..1" ServiceOrder3
+Customer3 "1" o-down- "n" ServiceOrder3
+Car3 "1" o-down- "n" ServiceOrder3
+SalesStaff3 "1" o-down- "n" ServiceOrder3
+ServiceOrder3 "1" o-down- "n" ServiceDetail3
+Service3 "1" o-down- "n" ServiceDetail3
+ServiceOrder3 "1" o-down- "n" UsedPart3
+SparePart3 "1" o-down- "n" UsedPart3
+ServiceDetail3 "1" o-down- "n" Assignment3
+Technician3 "1" o-down- "n" Assignment3
+ServiceOrder3 "1" o-down- "0..1" PaymentInvoice3
+SalesStaff3 "1" o-down- "n" PaymentInvoice3
+@enduml

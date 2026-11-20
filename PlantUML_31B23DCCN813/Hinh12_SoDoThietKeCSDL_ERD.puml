@@ -1,0 +1,239 @@
+@startuml
+title Sơ đồ thiết kế cơ sở dữ liệu (Physical Data Model) - GaraMan
+skinparam linetype ortho
+skinparam nodesep 30
+skinparam ranksep 40
+hide circle
+
+entity "tblMember3" as tblMember3 {
+  * id : bigint(19) <<PK>>
+  --
+  * username : varchar(50) <<UQ>>
+  * password : varchar(255)
+  birthday : date
+  email : varchar(225)
+  * phone : varchar(20)
+  * role : varchar(30)
+  note : varchar(255)
+  lastName : varchar(255)
+  middleName : varchar(255)
+  firstName : varchar(255)
+  houseNumber : varchar(255)
+  street : varchar(255)
+  ward : varchar(255)
+  district : varchar(255)
+  city : varchar(255)
+}
+
+entity "tblCustomer3" as tblCustomer3 {
+  * id : bigint(19) <<PK, FK>>
+  --
+  * customerCode : varchar(255) <<UQ>>
+  loyaltyPoint : integer(10)
+}
+
+entity "tblEmployee3" as tblEmployee3 {
+  * id : bigint(19) <<PK, FK>>
+  --
+  * employeeCode : varchar(50) <<UQ>>
+  position : varchar(255)
+  hireDate : date
+}
+
+entity "tblCar3" as tblCar3 {
+  * id : integer(10) <<PK>>
+  --
+  * plateNumber : varchar(50) <<UQ>>
+  brand : varchar(255)
+  model : varchar(255)
+  manufactureYear : integer(10)
+  color : varchar(255)
+  chassisNumber : varchar(255)
+  * tblCustomer3Id : bigint(19) <<FK>>
+}
+
+entity "tblTimeSlot3" as tblTimeSlot3 {
+  * id : integer(10) <<PK>>
+  --
+  name : varchar(255)
+  startTime : time(7)
+  endTime : time(7)
+  maxSlot : integer(10)
+}
+
+entity "tblAppointment3" as tblAppointment3 {
+  * id : integer(10) <<PK>>
+  --
+  * appointmentCode : varchar(50) <<UQ>>
+  appointmentDate : date
+  bookingDate : timestamp
+  status : varchar(30)
+  note : varchar(255)
+  * tblCustomer3Id : bigint(19) <<FK>>
+  * tblCar3Id : integer(10) <<FK>>
+  * tblTimeSlot3Id : integer(10) <<FK>>
+}
+
+entity "tblAppointmentDetail3" as tblAppointmentDetail3 {
+  * id : integer(10) <<PK>>
+  --
+  note : varchar(255)
+  * tblService3Id : integer(10) <<FK>>
+  * tblAppointment3Id : integer(10) <<FK>>
+}
+
+entity "tblServiceCategory3" as tblServiceCategory3 {
+  * id : integer(10) <<PK>>
+  --
+  name : varchar(255)
+  description : varchar(255)
+}
+
+entity "tblService3" as tblService3 {
+  * id : integer(10) <<PK>>
+  --
+  * serviceCode : varchar(50) <<UQ>>
+  name : varchar(255)
+  description : varchar(255)
+  price : decimal(15,2)
+  duration : integer(10)
+  * tblServiceCategory3Id : integer(10) <<FK>>
+}
+
+entity "tblServiceOrder3" as tblServiceOrder3 {
+  * id : integer(10) <<PK>>
+  --
+  * orderNumber : varchar(50) <<UQ>>
+  orderDate : timestamp
+  status : varchar(30)
+  * tblCustomer3Id : bigint(19) <<FK>>
+  * tblCar3Id : integer(10) <<FK>>
+  tblAppointment3Id : integer(10) <<FK, UQ>>
+  * tblEmployee3Id : bigint(19) <<FK>>
+}
+
+entity "tblServiceDetail3" as tblServiceDetail3 {
+  * id : integer(10) <<PK>>
+  --
+  quantity : integer(10)
+  price : decimal(15,2)
+  status : varchar(30)
+  * tblService3Id : integer(10) <<FK>>
+  * tblServiceOrder3Id : integer(10) <<FK>>
+}
+
+entity "tblPaymentInvoice3" as tblPaymentInvoice3 {
+  * id : integer(10) <<PK>>
+  --
+  * invoiceNumber : varchar(50) <<UQ>>
+  paymentDate : timestamp
+  paymentMethod : varchar(30)
+  discount : decimal(15,2)
+  orderId : integer(10) <<FK, UQ>>
+  * tblEmployee3Id : bigint(19) <<FK>>
+}
+
+entity "tblAssignment3" as tblAssignment3 {
+  * id : integer(10) <<PK>>
+  --
+  assignDate : timestamp
+  finishDate : timestamp
+  status : varchar(30)
+  * tblEmployee3Id : bigint(19) <<FK>>
+  * tblServiceDetail3Id : integer(10) <<FK>>
+}
+
+entity "tblUsedPart3" as tblUsedPart3 {
+  * id : integer(10) <<PK>>
+  --
+  quantity : integer(10)
+  price : decimal(15,2)
+  * tblServiceOrder3Id : integer(10) <<FK>>
+  * tblSparePart3Id : integer(10) <<FK>>
+}
+
+entity "tblSupplier3" as tblSupplier3 {
+  * id : integer(10) <<PK>>
+  --
+  * supplierCode : varchar(50) <<UQ>>
+  name : varchar(255)
+  address : varchar(255)
+  phone : varchar(20)
+  email : varchar(225)
+  representative : varchar(255)
+}
+
+entity "tblImportReceipt3" as tblImportReceipt3 {
+  * id : integer(10) <<PK>>
+  --
+  * receiptNumber : varchar(50) <<UQ>>
+  importDate : timestamp
+  note : varchar(255)
+  * tblEmployee3Id : bigint(19) <<FK>>
+  * tblSupplier3Id : integer(10) <<FK>>
+}
+
+entity "tblImportDetail3" as tblImportDetail3 {
+  * id : integer(10) <<PK>>
+  --
+  quantity : integer(10)
+  importPrice : decimal(15,2)
+  * tblImportReceipt3Id : integer(10) <<FK>>
+  * tblSparePart3Id : integer(10) <<FK>>
+}
+
+entity "tblSparePart3" as tblSparePart3 {
+  * id : integer(10) <<PK>>
+  --
+  * partCode : varchar(50) <<UQ>>
+  name : varchar(255)
+  unit : varchar(255)
+  salePrice : decimal(15,2)
+  stockQuantity : integer(10)
+  * tblPartCategory3Id : integer(10) <<FK>>
+}
+
+entity "tblPartCategory3" as tblPartCategory3 {
+  * id : integer(10) <<PK>>
+  --
+  name : varchar(255)
+  description : varchar(255)
+}
+
+tblMember3 ||--o| tblCustomer3
+tblMember3 ||--o| tblEmployee3
+
+tblCustomer3 ||--o{ tblCar3
+tblCustomer3 ||--o{ tblAppointment3
+tblCustomer3 ||--o{ tblServiceOrder3
+
+tblCar3 ||--o{ tblAppointment3
+tblCar3 ||--o{ tblServiceOrder3
+
+tblTimeSlot3 ||--o{ tblAppointment3
+tblAppointment3 ||--|{ tblAppointmentDetail3
+tblService3 ||--o{ tblAppointmentDetail3
+
+tblServiceCategory3 ||--o{ tblService3
+tblPartCategory3 ||--o{ tblSparePart3
+
+tblSupplier3 ||--o{ tblImportReceipt3
+tblEmployee3 ||--o{ tblImportReceipt3
+tblImportReceipt3 ||--|{ tblImportDetail3
+tblSparePart3 ||--o{ tblImportDetail3
+
+tblEmployee3 ||--o{ tblServiceOrder3
+tblAppointment3 |o--o{ tblServiceOrder3
+tblServiceOrder3 ||--|{ tblServiceDetail3
+tblService3 ||--o{ tblServiceDetail3
+
+tblServiceDetail3 ||--o{ tblAssignment3
+tblEmployee3 ||--o{ tblAssignment3
+
+tblServiceOrder3 ||--o{ tblUsedPart3
+tblSparePart3 ||--o{ tblUsedPart3
+
+tblServiceOrder3 ||--|| tblPaymentInvoice3
+tblEmployee3 ||--o{ tblPaymentInvoice3
+
+@enduml

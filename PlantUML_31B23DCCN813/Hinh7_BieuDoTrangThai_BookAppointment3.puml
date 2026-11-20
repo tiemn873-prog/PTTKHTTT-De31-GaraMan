@@ -1,0 +1,17 @@
+@startuml
+title Hình 7: Biểu đồ trạng thái của modul đặt lịch hẹn trực tuyến
+
+[*] --> S1
+state "Hien thi GD chinh khach hang" as S1
+state "Hien thi GD chon ngay gio hen" as S2
+state "Hien thi GD nhap thong tin ca nhan" as S3
+state "Hien thi GD thong bao ket qua" as S4
+
+S1 --> S2 : [chon chuc nang dat lich hen]
+S2 --> S2 : [chon ngay hen] / nap lai khung gio trong
+S2 --> S3 : [chon khung gio va dich vu, click Tiep tuc]
+S3 --> S2 : [click Quay lai]
+S3 --> S3 : [click Xac nhan, du lieu khong hop le]
+S3 --> S4 : [click Xac nhan, du lieu hop le] / luu lich hen
+S4 --> [*] : [click OK]
+@enduml

@@ -7,18 +7,32 @@ import java.util.Date;
 public class ImportReceipt3 implements Serializable {
     private static final long serialVersionUID = 1L;
     
+    // Các trường khớp chính xác 100% với Sơ đồ thiết kế lớp ImportReceipt3
     private int id;
-    private String receiptCode;
-    private Supplier3 supplier;
+    private String receiptNumber;           // Số phiếu nhập (-receiptNumber : String)
+    private Date importDate;                // Ngày nhập (-importDate : Date)
+    private String note;                    // Ghi chú (-note : String)
+    private Supplier3 supplier;             // Nhà cung cấp (-supplier : Supplier3)
+    private WarehouseStaff3 createdBy;      // Nhân viên kho lập phiếu (-createdBy : WarehouseStaff3)
+    private ArrayList<ImportDetail3> details; // Chi tiết phiếu nhập (-details : ImportDetail3[])
+    
+    // Các trường bổ trợ giao diện & DTO
     private int warehouseStaffId;
     private String staffName;
-    private Date importDate;
     private double totalAmount;
-    private String note;
     private int totalPartCount;
-    private ArrayList<ImportDetail3> details;
 
     public ImportReceipt3() {
+        this.details = new ArrayList<>();
+    }
+
+    public ImportReceipt3(int id, String receiptNumber, Date importDate, String note, Supplier3 supplier, WarehouseStaff3 createdBy) {
+        this.id = id;
+        this.receiptNumber = receiptNumber;
+        this.importDate = importDate;
+        this.note = note;
+        this.supplier = supplier;
+        this.createdBy = createdBy;
         this.details = new ArrayList<>();
     }
 
@@ -30,12 +44,38 @@ public class ImportReceipt3 implements Serializable {
         this.id = id;
     }
 
+    // Tên chuẩn theo sơ đồ: receiptNumber
+    public String getReceiptNumber() {
+        return receiptNumber;
+    }
+
+    public void setReceiptNumber(String receiptNumber) {
+        this.receiptNumber = receiptNumber;
+    }
+
+    // Alias tương thích code cũ: receiptCode
     public String getReceiptCode() {
-        return receiptCode;
+        return receiptNumber;
     }
 
     public void setReceiptCode(String receiptCode) {
-        this.receiptCode = receiptCode;
+        this.receiptNumber = receiptCode;
+    }
+
+    public Date getImportDate() {
+        return importDate;
+    }
+
+    public void setImportDate(Date importDate) {
+        this.importDate = importDate;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 
     public Supplier3 getSupplier() {
@@ -44,6 +84,22 @@ public class ImportReceipt3 implements Serializable {
 
     public void setSupplier(Supplier3 supplier) {
         this.supplier = supplier;
+    }
+
+    public WarehouseStaff3 getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(WarehouseStaff3 createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public ArrayList<ImportDetail3> getDetails() {
+        return details;
+    }
+
+    public void setDetails(ArrayList<ImportDetail3> details) {
+        this.details = details;
     }
 
     public int getWarehouseStaffId() {
@@ -62,14 +118,6 @@ public class ImportReceipt3 implements Serializable {
         this.staffName = staffName;
     }
 
-    public Date getImportDate() {
-        return importDate;
-    }
-
-    public void setImportDate(Date importDate) {
-        this.importDate = importDate;
-    }
-
     public double getTotalAmount() {
         return totalAmount;
     }
@@ -78,27 +126,11 @@ public class ImportReceipt3 implements Serializable {
         this.totalAmount = totalAmount;
     }
 
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
-    }
-
     public int getTotalPartCount() {
         return totalPartCount;
     }
 
     public void setTotalPartCount(int totalPartCount) {
         this.totalPartCount = totalPartCount;
-    }
-
-    public ArrayList<ImportDetail3> getDetails() {
-        return details;
-    }
-
-    public void setDetails(ArrayList<ImportDetail3> details) {
-        this.details = details;
     }
 }

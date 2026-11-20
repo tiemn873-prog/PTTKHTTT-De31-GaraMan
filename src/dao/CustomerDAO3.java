@@ -9,6 +9,12 @@ public class CustomerDAO3 extends DAO3 {
         super();
     }
 
+    public Customer3 getCustomerInfo(Customer3 customer) {
+        if (customer == null) return null;
+        int mId = customer.getMemberId() > 0 ? customer.getMemberId() : customer.getId();
+        return getCustomerInfo(mId);
+    }
+
     public Customer3 getCustomerInfo(int memberId) {
         Customer3 c = null;
         String sql = "{call sp_getCustomerInfo3(?)}";

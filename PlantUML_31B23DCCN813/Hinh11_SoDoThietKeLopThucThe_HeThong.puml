@@ -1,0 +1,270 @@
+@startuml
+title Sơ đồ thiết kế lớp thực thể của hệ thống GaraMan
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+skinparam linetype ortho
+skinparam nodesep 30
+skinparam ranksep 40
+top to bottom direction
+hide circle
+
+abstract class Member3 {
+  - id : int
+  - username : String
+  - password : String
+  - birthday : Date
+  - email : String
+  - phone : String
+  - role : String
+  - note : String
+  - fullName : FullName3
+  - address : Address3
+}
+
+class FullName3 {
+  - id : int
+  - lastName : String
+  - middleName : String
+  - firstName : String
+}
+
+class Address3 {
+  - id : int
+  - houseNumber : String
+  - street : String
+  - ward : String
+  - district : String
+  - city : String
+}
+
+class Customer3 {
+  - customerCode : String
+  - loyaltyPoint : int
+  - cars : Car3[]
+}
+
+abstract class Employee3 {
+  - employeeCode : String
+  - position : String
+  - hireDate : Date
+}
+
+class Manager3
+class WarehouseStaff3
+class SalesStaff3
+class Technician3
+
+class CustomerStatistic3 {
+  - visitCount : int
+  - totalSpending : BigDecimal
+}
+
+class PaymentInvoice3 {
+  - id : int
+  - invoiceNumber : String
+  - paymentDate : Date
+  - paymentMethod : String
+  - discount : BigDecimal
+  - serviceOrder : ServiceOrder3
+  - createdBy : SalesStaff3
+}
+
+class ServiceOrder3 {
+  - id : int
+  - orderNumber : String
+  - orderDate : Date
+  - status : String
+  - customer : Customer3
+  - car : Car3
+  - createdBy : SalesStaff3
+  - appointment : Appointment3
+  - serviceDetails : ServiceDetail3[]
+  - usedParts : UsedPart3[]
+}
+
+class ServiceDetail3 {
+  - id : int
+  - quantity : int
+  - price : BigDecimal
+  - status : String
+  - service : Service3
+  - assignments : Assignment3[]
+}
+
+class UsedPart3 {
+  - id : int
+  - quantity : int
+  - price : BigDecimal
+  - sparePart : SparePart3
+}
+
+class Assignment3 {
+  - id : int
+  - assignDate : Date
+  - finishDate : Date
+  - status : String
+  - technician : Technician3
+}
+
+class Appointment3 {
+  - id : int
+  - appointmentCode : String
+  - appointmentDate : Date
+  - bookingDate : Date
+  - status : String
+  - note : String
+  - customer : Customer3
+  - car : Car3
+  - timeSlot : TimeSlot3
+  - details : AppointmentDetail3[]
+}
+
+class AppointmentDetail3 {
+  - id : int
+  - note : String
+  - service : Service3
+}
+
+class TimeSlot3 {
+  - id : int
+  - name : String
+  - startTime : Time
+  - endTime : Time
+  - maxSlot : int
+}
+
+class Car3 {
+  - id : int
+  - plateNumber : String
+  - brand : String
+  - model : String
+  - manufactureYear : int
+  - color : String
+  - chassisNumber : String
+}
+
+class ServiceCategory3 {
+  - id : int
+  - name : String
+  - description : String
+  - services : Service3[]
+}
+
+class Service3 {
+  - id : int
+  - serviceCode : String
+  - name : String
+  - description : String
+  - price : BigDecimal
+  - duration : int
+}
+
+class ServiceStatistic3 {
+  - usageCount : int
+  - totalRevenue : BigDecimal
+}
+
+class PartCategory3 {
+  - id : int
+  - name : String
+  - description : String
+  - parts : SparePart3[]
+}
+
+class SparePart3 {
+  - id : int
+  - partCode : String
+  - name : String
+  - unit : String
+  - salePrice : BigDecimal
+  - stockQuantity : int
+  - description : String
+}
+
+class SparePartStatistic3 {
+  - importQuantity : int
+  - soldQuantity : int
+}
+
+class Supplier3 {
+  - id : int
+  - supplierCode : String
+  - name : String
+  - address : String
+  - phone : String
+  - email : String
+  - representative : String
+}
+
+class SupplierStatistic3 {
+  - importCount : int
+  - totalQuantity : int
+  - totalAmount : BigDecimal
+}
+
+class ImportReceipt3 {
+  - id : int
+  - receiptNumber : String
+  - importDate : Date
+  - note : String
+  - supplier : Supplier3
+  - createdBy : WarehouseStaff3
+  - details : ImportDetail3[]
+}
+
+class ImportDetail3 {
+  - id : int
+  - quantity : int
+  - importPrice : BigDecimal
+  - sparePart : SparePart3
+}
+
+' Kế thừa
+Member3 <|-down- Customer3
+Member3 <|-down- Employee3
+Employee3 <|-down- Manager3
+Employee3 <|-down- WarehouseStaff3
+Employee3 <|-down- SalesStaff3
+Employee3 <|-down- Technician3
+
+Customer3 <|-down- CustomerStatistic3
+Supplier3 <|-down- SupplierStatistic3
+Service3 <|-down- ServiceStatistic3
+SparePart3 <|-down- SparePartStatistic3
+
+' Hợp thành & liên kết
+Member3 o-down- FullName3
+Member3 o-down- Address3
+Customer3 o-down- Car3
+
+PaymentInvoice3 o-down- ServiceOrder3
+PaymentInvoice3 o-down- SalesStaff3
+
+ServiceOrder3 o-down- Customer3
+ServiceOrder3 o-down- Car3
+ServiceOrder3 o-down- SalesStaff3
+ServiceOrder3 o-down- Appointment3
+ServiceOrder3 o-down- ServiceDetail3
+ServiceOrder3 o-down- UsedPart3
+
+ServiceDetail3 o-down- Service3
+ServiceDetail3 o-down- Assignment3
+
+UsedPart3 o-down- SparePart3
+Assignment3 o-down- Technician3
+
+Appointment3 o-down- Customer3
+Appointment3 o-down- Car3
+Appointment3 o-down- TimeSlot3
+Appointment3 o-down- AppointmentDetail3
+AppointmentDetail3 o-down- Service3
+
+ServiceCategory3 o-down- Service3
+PartCategory3 o-down- SparePart3
+
+ImportReceipt3 o-down- Supplier3
+ImportReceipt3 o-down- WarehouseStaff3
+ImportReceipt3 o-down- ImportDetail3
+ImportDetail3 o-down- SparePart3
+
+@enduml

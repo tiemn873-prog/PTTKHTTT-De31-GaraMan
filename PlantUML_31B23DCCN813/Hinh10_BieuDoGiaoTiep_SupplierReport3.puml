@@ -1,0 +1,32 @@
+@startuml
+title Hình 10: Biểu đồ giao tiếp của modul thống kê nhà cung cấp theo lượng hàng nhập
+hide empty members
+
+object "Quan li" as QL
+object "ManagerMainUI3" as A
+object "SelectReportUI3" as B
+object "SupplierReportUI3" as C
+object "ImportDetailUI3" as D
+object "ImportInvoiceUI3" as E
+object "SupplierStatistic3\n7: getSupplierStatistic()" as F
+object "ImportReceipt3\n13: getReceiptOfSupplier()\n19: getReceiptDetail()" as G
+
+QL --> A : 1: chon xem bao cao thong ke
+A --> B : 2: goi
+B --> QL : 3: hien thi
+QL --> B : 4: chon loai TK va khoang ngay
+B --> C : 5: goi
+C --> F : 6: goi
+F --> C : 8: tra ve
+C --> QL : 9: hien thi
+QL --> C : 10: click 1 nha cung cap
+C --> D : 11: goi
+D --> G : 12: goi
+G --> D : 14: tra ve
+D --> QL : 15: hien thi
+QL --> D : 16: click 1 lan nhap
+D --> E : 17: goi
+E --> G : 18: goi
+G --> E : 20: tra ve
+E --> QL : 21: hien thi hoa don nhap
+@enduml
